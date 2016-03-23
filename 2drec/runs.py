@@ -7,7 +7,6 @@ Difference Methods on Polygonal and Polyhedral Mesh."
 import sys
 
 # Include relative path for mimpy library. 
-sys.path.append("../../../")
 
 import mimpy.mesh.voromesh as voromesh
 import mimpy.mfd.mfd as mfd
@@ -15,11 +14,18 @@ import numpy as np
 import random
 import math 
 
-res_mfd = mfd.MFD()
-res_mfd.set_compute_diagonality(True)
+N = int(sys.argv[1])
 
+cell_shifted = False
+point_shifted = False
+
+if int(sys.argv[2]) == 1:
+    cell_shifted = True
+
+if int(sys.argv[3]) == 1:
+    point_shifted = True
+    
 method = 1
-res_mfd.set_m_e_construction_method(method)
 
 print "using method =>", method
 
@@ -144,13 +150,14 @@ def make_mod_function(h, ni, nj, nk):
     return mod
 
 
-mesh_input = [(K, open("mesh4.vol")), 
-              (K, open("mesh8.vol")), 
-              (K, open("mesh16.vol")), 
-              (K, open("mesh32.vol")), 
-              (K, open("mesh64.vol")), 
-              (K, open("mesh128.vol")), ]
-#              (K, open("mesh256.vol")), ]
+mesh_input = [("mesh4.vol", K), 
+              ("mesh8.vol", K), 
+              ("mesh16.vol", K), 
+              ("mesh32.vol", K), 
+              ("mesh64.vol", K),
+              ("mesh128.vol", K), 
+              ("mesh256.vol", K),
+              ("mesh512.vol", K),][:N]
 
 
 
@@ -159,9 +166,10 @@ mesh_files = ['mesh4',
               'mesh8', 
               'mesh16',
               'mesh32',
-              'mesh64', 
-              'mesh128', ]
-#              'mesh256', ]
+              'mesh64',
+              'mesh128', 
+              'mesh256',
+              'mesh512', ][:N]
 
 shift_parameter = .0
 
@@ -170,8 +178,10 @@ shifts = [1./4.,
           1./16.,
           1./32.,
           1./64., 
-          1./128., ]
-#          1./256.]
+          1./128.,
+          1./256.,
+          1./512.][:N]
+
 #          1./64]
 #          shift_parameter*1./32., ]
 #          shift_parameter*1./64., ]
@@ -184,6 +194,7 @@ meshes = []
 for (mesh_args, mesh_name) in zip(mesh_input, mesh_files):
     print mesh_name
     res_mesh = voromesh.VoroMesh()
+    print mesh_args
     res_mesh.build_mesh(*mesh_args)   
     meshes.append(res_mesh)
     max_volume = res_mesh.get_cell_volume(0)
@@ -203,8 +214,9 @@ error_list = [[1./4.],
               [1./16.], 
               [1./32.],
               [1./64.], 
-              [1./128.],]
-#              [1./256.],]
+              [1./128.],
+              [1./256.],
+              [1./512.],][:N]
 
       
 for (index, (res_mesh, shift, mesh_name)) in enumerate(zip(meshes, shifts, mesh_files)):
@@ -214,34 +226,37 @@ for (index, (res_mesh, shift, mesh_name)) in enumerate(zip(meshes, shifts, mesh_
 #    res_mesh.use_cell_shifted_centroid()
 #    res_mesh.initialize_cell_shifted_centroid()
 
-    cell_shifted = False
-    point_shifted = True
-
     res_mesh.has_cell_shifted_centroid = cell_shifted
     res_mesh.has_face_shifted_centroid = point_shifted
     
     print "cell shifted = ", cell_shifted
     print "piont shfited = ", point_shifted
 
-    res_mesh.apply_dirichlet_from_function(0, lambda p:u(p))
-    res_mesh.apply_dirichlet_from_function(1, lambda p:u(p))
-    res_mesh.apply_dirichlet_from_function(2, lambda p:u(p))
-    res_mesh.apply_dirichlet_from_function(3, lambda p:u(p))
+    #Connect the MFD instance to the new mesh. 
+    res_mfd = mfd.MFD()
+    res_mfd.set_compute_diagonality(True)
+    res_mfd.set_m_e_construction_method(method)
+
+    
+    res_mfd.set_mesh(res_mesh)
+
+
+    res_mfd.apply_dirichlet_from_function(0, lambda p:u(p))
+    res_mfd.apply_dirichlet_from_function(1, lambda p:u(p))
+    res_mfd.apply_dirichlet_from_function(2, lambda p:u(p))
+    res_mfd.apply_dirichlet_from_function(3, lambda p:u(p))
     #res_mesh.apply_dirichlet_from_function(4, lambda p:u(p))
     #res_mesh.apply_dirichlet_from_function(5, lambda p:u(p))
 
 
-    res_mesh.apply_neumann_from_function(4, lambda p:np.array([0., 0., 0.]))
-    res_mesh.apply_neumann_from_function(5, lambda p:np.array([0., 0., 0.]))
+    res_mfd.apply_neumann_from_function(4, lambda p:np.array([0., 0., 0.]))
+    res_mfd.apply_neumann_from_function(5, lambda p:np.array([0., 0., 0.]))
 
     #Apply the forcing function f. 
-    res_mesh.apply_forcing_from_function(f)
+    res_mfd.apply_forcing_from_function(f)
     
     #res_mesh.apply_forcing_from_grad(grad_u, f)
     
-    #Connect the MFD instance to the new mesh. 
-    res_mfd.set_mesh(res_mesh)
-
     res_mfd.check_m_e = True
 
     print "build lhs"
@@ -258,17 +273,18 @@ for (index, (res_mesh, shift, mesh_name)) in enumerate(zip(meshes, shifts, mesh_
     #res_mfd.solve(solver = 'gmres')
     #res_mfd.solve_divided()
     res_mfd.solve_petsc()
-
-    res_mesh.output_vtk_mesh(mesh_name, 
-                             [res_mfd.get_pressure_solution(), 
-                              res_mfd.get_analytical_pressure_solution(u), 
-                              res_mfd.get_diagonality(), ],
-                             ["MFDPressure", "AnalyticalPressure", "ORTHO"])
+    #res_mfd.solve()
+              
+    #res_mesh.output_vtk_mesh(mesh_name, 
+    #                         [res_mfd.get_pressure_solution(), 
+    #                          res_mfd.get_analytical_pressure_solution(u), 
+    #                          res_mfd.get_diagonality(), ],
+    #                         ["MFDPressure", "AnalyticalPressure", "ORTHO"])
 
     error_list[index] += [res_mfd.compute_l2_error_pressure(u),
                           res_mfd.compute_l2_error_pressure(u, quadrature_method = 1),
                           res_mfd.compute_l2_error_velocity(grad_u), 
-                          res_mfd.compute_l2_error_velocity(grad_u),]
+                          res_mfd.compute_l2_error_velocity(grad_u, quadrature_method = 1),]
 
 print error_list[0][0], "&" , "%.4e"%error_list[0][1], "&" ,
 print "---", "&" ,"%.4e"%error_list[0][2],"&" , "---", "&","%.4e"%error_list[0][3], "&" ,"---", 

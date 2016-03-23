@@ -1,0 +1,91 @@
+using method => 1
+Centroid shifted by 0.0
+mesh4
+('mesh4.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh8
+('mesh8.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh16
+('mesh16.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh32
+('mesh32.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh64
+('mesh64.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh128
+('mesh128.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh256
+('mesh256.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+mesh512
+('mesh512.vol', <function K at 0x7f728a367aa0>)
+Dropped Faces = 0
+done building meshes
+processing mesh4
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh8
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh16
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh32
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh64
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh128
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh256
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh512
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+0.25 & 5.7583e-01 & --- & 6.7433e-01 & --- & 1.2550e+01 & --- 1.2339e+01 ---
+1.2500e-01 & 6.1098e-02 & 3.2365 & 8.5488e-02 & 2.9797 & 7.1520e+00 & 0.8113 5.5923e+00 & 1.1417
+6.2500e-02 & 1.5249e-02 & 2.0024 & 3.2731e-02 & 1.3851 & 2.1837e+00 & 1.7116 1.9950e+00 & 1.4871
+3.1250e-02 & 5.3167e-03 & 1.5202 & 1.7100e-02 & 0.9366 & 1.2920e+00 & 0.7572 1.1364e+00 & 0.8119
+1.5625e-02 & 1.4519e-03 & 1.8726 & 8.7834e-03 & 0.9612 & 6.3845e-01 & 1.0170 5.5647e-01 & 1.0301
+7.8125e-03 & 3.9600e-04 & 1.8744 & 4.2479e-03 & 1.0480 & 2.9472e-01 & 1.1153 2.5961e-01 & 1.1000
+3.9062e-03 & 1.0434e-04 & 1.9241 & 2.1275e-03 & 0.9976 & 1.4729e-01 & 1.0006 1.2885e-01 & 1.0107
+1.9531e-03 & 2.3531e-05 & 2.1487 & 1.0584e-03 & 1.0074 & 7.3682e-02 & 0.9993 6.4383e-02 & 1.0009

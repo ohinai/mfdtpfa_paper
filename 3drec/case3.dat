@@ -1,0 +1,58 @@
+using method => 1
+Centroid shifted by 0.0
+mesh4
+('mesh4.vol', <function K at 0x7fad3cb66aa0>)
+Dropped Faces = 0
+mesh8
+('mesh8.vol', <function K at 0x7fad3cb66aa0>)
+Dropped Faces = 0
+mesh16
+('mesh16.vol', <function K at 0x7fad3cb66aa0>)
+Dropped Faces = 0
+mesh32
+('mesh32.vol', <function K at 0x7fad3cb66aa0>)
+Dropped Faces = 0
+mesh64
+('mesh64.vol', <function K at 0x7fad3cb66aa0>)
+Dropped Faces = 0
+done building meshes
+processing mesh4
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh8
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh16
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh32
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+processing mesh64
+cell shifted =  False
+piont shfited =  True
+build lhs
+all ortho False
+build rhs
+solving...
+0.25 & 1.0337e-01 & --- & 1.3362e-01 & --- & 4.9694e+00 & --- 5.0281e+00 ---
+1.2500e-01 & 3.7955e-02 & 1.4454 & 5.9937e-02 & 1.1566 & 2.0539e+00 & 1.2747 2.0372e+00 & 1.3035
+6.2500e-02 & 1.8244e-02 & 1.0568 & 3.1527e-02 & 0.9268 & 1.2827e+00 & 0.6792 1.2217e+00 & 0.7377
+3.1250e-02 & 5.7412e-03 & 1.6680 & 1.0330e-02 & 1.6098 & 4.5202e-01 & 1.5047 4.2381e-01 & 1.5274
+1.5625e-02 & 1.6121e-03 & 1.8324 & 3.1511e-03 & 1.7129 & 1.3763e-01 & 1.7156 1.2871e-01 & 1.7193
